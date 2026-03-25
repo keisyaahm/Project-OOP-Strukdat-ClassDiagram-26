@@ -1,0 +1,65 @@
+classDiagram
+    class Member {
+        <<abstract>>
+        #nama : String
+        #umur : int
+        +Member(nama: String, umur: int)
+        +getNama() String
+        +getUmur() int
+        +getKategori()* String
+    }
+
+    class MemberInti {
+        +MemberInti(nama: String, umur: int)
+        +getKategori() String
+    }
+
+    class MemberTrainee {
+        +MemberTrainee(nama: String, umur: int)
+        +getKategori() String
+    }
+
+    class KontenDigital {
+        <<abstract>>
+        -idLaporan : String
+        -targetMember : Member
+        -aiScore : double
+        -lvlBahaya : double
+        -isFlag : boolean
+        +KontenDigital(idLaporan: String, targetMember: Member, aiScore: double, lvlBahaya: double)
+        +getIdLaporan() String
+        +getTargetMember() Member
+        +getAiScore() double
+        +getLvlBahaya() double
+        +isFlag() boolean
+        +setFlag(status: boolean) void
+        +kalkuSkorAkhir()* double
+    }
+
+    class KontenSosmed {
+        -platform : String
+        -tgl : String
+        +KontenSosmed(idLaporan: String, targetMember: Member, aiScore: double, lvlBahaya: double, platform: String, tgl: String)
+        +getPlatform() String
+        +getTgl() String
+        +kalkuSkorAkhir() double
+    }
+
+    class Scanner {
+        -batasBhy : double
+        +Scanner(batasBhy: double)
+        +analisis(konten: KontenSosmed) void
+    }
+
+    class AksiManagement {
+        -namaDev : String
+        +AksiManagement(namaDev: String)
+        +prosesHukum(konten: KontenSosmed) void
+    }
+
+    Member <|-- MemberInti
+    Member <|-- MemberTrainee
+    KontenDigital <|-- KontenSosmed
+    KontenDigital "1" o-- "1" Member : targetMember
+    Scanner ..> KontenSosmed : analisis
+    AksiManagement ..> KontenSosmed : prosesHukum
