@@ -1,4 +1,4 @@
-abstract class Member {
+abstract class Member { //korban
     protected String nama;
     protected int umur;
 
@@ -74,10 +74,6 @@ abstract class KontenDigital{
         return isFlag;
     }
 
-    public void setFLag(boolean status){
-        this.isFlag=status;
-    }
-
     public void setFlag(boolean status) {
         this.isFlag = status;
     }
@@ -118,11 +114,12 @@ class Scanner{
     public void analisis (KontenSosmed konten){
         double skor = konten.kalkuSkorAkhir();
 
+        //cek aman ga
         if (skor>=batasBahaya){
             konten.setFlag(true);
         }else{
             konten.setFlag(false);
-            System.out.printf("[AMANNN] Target: %-20s | Platform: %-12s | Skor: %.1f%%\n", 
+            System.out.printf("\n[AMANNN] Target: %-10s | Platform: %-10s | Skor: %.1f%%\n", 
                 konten.getTargetMember().getNama(),
                 konten.getPlatform(),
                 skor);
@@ -151,12 +148,12 @@ class AksiManagement{
             ? "[URGENTT PRIORITAS 1 DBU]"
             : "[PRIORITAS 2]";
 
-        System.out.println("=== LAPORAN TERDETEKSI ===");
-        System.out.println("Divisi:" + namaDev);
-        System.out.println("ID Konten:" + konten.getIdLaporan());
-        System.out.println("Platform:" + konten.getPlatform());
-        System.out.printf("Target:+ %s (%s, %d tahun\n", korban.getNama(), korban.getKategori(), korban.getUmur());
-        System.out.printf("AI Score: + %.2f%%\n", konten.getAiScore());
+        System.out.println("\n=== LAPORAN TERDETEKSI BAHAYA ===");
+        System.out.println("Divisi: " + namaDev);
+        System.out.println("ID Konten: " + konten.getIdLaporan());
+        System.out.println("Platform: " + konten.getPlatform());
+        System.out.printf("Target: %s (%s, %d tahun)\n", korban.getNama(), korban.getKategori(), korban.getUmur());
+        System.out.printf("AI Score: %.2f%%\n", konten.getAiScore());
         System.out.printf("Lvl Bahaya: %.1f%%\n", konten.getLvlBahaya());
         System.out.printf("Skor Akhir: %.1f%% (batas: 70.0%%)\n", skor);
         System.out.println("Status: FLAGGED");
@@ -174,21 +171,21 @@ public class Main{
 
         //member
         MemberTrainee ekin = new MemberTrainee("Jacqueline Immanuela", 16);
-        MemberTrainee intan = new MemberTrainee("Nur Intan", 20);
         MemberInti freya = new MemberInti("Raden Rara Freyanashifa Jayawardana", 20);
+        MemberTrainee intan = new MemberTrainee("Nur Intan", 20);
         MemberInti indah = new MemberInti("Indah Cahya Nabila", 25);
 
         //konten sosmed
-        KontenSosmed kasus1 = new KontenSosmed(
+        KontenSosmed kasus1 = new KontenSosmed( //CNT ibaratnya id track yang ada hasil scanning
             "CNT-089296", ekin, 61.86, 95.0, "TikTok", "25 Maret 2026");
         KontenSosmed kasus2 = new KontenSosmed(
-            "CNT-080911", intan, 12.0, 10.0, "TikTok", "25 Maret 2026");
-        KontenSosmed kasus3 = new KontenSosmed(
             "CNT-880912", freya, 93.67, 65.0, "Twitter", "07 Januari 2026");
+        KontenSosmed kasus3 = new KontenSosmed(
+            "CNT-080911", intan, 12.0, 10.0, "TikTok", "25 Maret 2026");
         KontenSosmed kasus4 = new KontenSosmed(
             "CNT-880913", indah, 15.0, 5.0, "Instagram", "25 Maret 2026");
 
-        System.out.println("=== DETEKSI AI DEEPFAKE ===\n");
+        System.out.println("=== DETEKSI AI DEEPFAKE ===");
         
         scanner.analisis(kasus1); management.prosesHukum(kasus1);
         scanner.analisis(kasus2); management.prosesHukum(kasus2);
